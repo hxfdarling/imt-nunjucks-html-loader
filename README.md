@@ -1,38 +1,40 @@
-Nunjucks (Webpack) HTML Loader
-==============================
-The original 'nunjucks-loader' takes nunjucks templates and turns them into javascript. I wanted to take nunjucks templates and turn them into pre-compiled static html files.
+# imt-nunjucks-loader
 
-[![NPM version][npm-image]][npm-url]
-[![Github license][github-license-image]][github-url]
-[![Github stars][github-image]][github-url]
+The original '[nunjucks-html-loader](https://github.com/ryanhornberger/nunjucks-html-loader)' not support relative search path and webpack4 has warning. So, I fork it
 
-Usage
------
+## Usage
 
-This is a very simple webpack loader for nunjucks files. It performs the following opteration:
+### install
 
-    some-template.nunj -> html string
+```bash
+npm i -D imt-nunjucks-loader
+```
 
-When you mix it with the file-loader you can take it one step further!
+### webpack rules
 
-    some-template.nunj -> html string -> some-file.html
-
-Add your personal variation to the below loader configuration to your webpack config and you should be good to go.
-
-	{
-        test: /\.nunj$/,
-        loader: 'file?context=' + precompiledContext + '&name=[path][name].html!nunjucks-html?' +
-        	JSON.stringify({
-        		'searchPaths': [
-					'/path/to/sources',
-					'/path/to/more/sources'
-				]
-        	})
-    }
-
-
-[npm-url]: https://www.npmjs.com/package/nunjucks-html-loader
-[npm-image]: https://img.shields.io/npm/v/nunjucks-html-loader.svg
-[github-url]: https://github.com/ryanhornberger/nunjucks-html-loader
-[github-image]: https://img.shields.io/github/stars/ryanhornberger/nunjucks-html-loader.svg?style=social&label=Star
-[github-license-image]: https://img.shields.io/github/license/ryanhornberger/nunjucks-html-loader.svg
+```js
+const configureHtmlLoader = ({ mini, projectDir }) => {
+  return {
+    test: /\.(html|njk|nunjucks)$/,
+    use: [
+      {
+        loader: resolve('html-loader'),
+        options: {
+          minimize: mini && env.NODE_ENV === PROD,
+        },
+      },
+      resolve('html-inline-assets-loader'),
+      {
+        loader: resolve('nunjucks-html-loader'),
+        options: {
+          // Other super important. This will be the base
+          // directory in which webpack is going to find
+          // the layout and any other file index.njk is calling.
+          // default search path is current resource path
+          searchPaths: ['./src', './src/pages', './src/assets'].map(i => path.join(projectDir, i)),
+        },
+      },
+    ],
+  };
+};
+```

@@ -1,6 +1,6 @@
 {
-  "name": "nunjucks-html-loader",
-  "version": "1.1.0",
+  "name": "imt-nunjucks-loader",
+  "version": "1.0.0",
   "description": "A webpack loader that takes nunjucks templates and returns raw html. It also works with webpack's watch command",
   "npmName": "nunjucks-html-loader",
   "keywords": [
@@ -12,24 +12,16 @@
     "hmr",
     "live"
   ],
-  "author": "Ryan Hornberger <ryhornberger@gmail.com> (https://github.com/ryanhornberger)",
   "license": "MIT",
-  "homepage": "https://github.com/ryanhornberger/nunjucks-html-loader",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ryanhornberger/nunjucks-html-loader.git"
-  },
-  "bugs": {
-    "url": "https://github.com/ryanhornberger/nunjucks-html-loader/issues"
-  },
   "main": "index.js",
   "dependencies": {
-    "loader-utils": "^0.2.16",
+    "loader-utils": "^1.1.0",
     "nunjucks": "^3.0.0"
   },
   "devDependencies": {
     "commitlint-config-imt": "0.0.1",
-    "eslint-config-zman": "0.0.9"
+    "eslint-config-zman": "0.0.9",
+    "standard-version": "^4.4.0"
   },
   "config": {
     "commitizen": {
@@ -43,5 +35,17 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  }
+  },
+  "scripts": {
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hxfdarling/nunjucks-html-loader.git"
+  },
+  "author": "zman",
+  "bugs": {
+    "url": "https://github.com/hxfdarling/nunjucks-html-loader/issues"
+  },
+  "homepage": "https://github.com/hxfdarling/nunjucks-html-loader#readme"
 }
